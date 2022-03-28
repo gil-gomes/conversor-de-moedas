@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Modeas</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <main>
+
+        <div class="panel d-flex">
+
+            <div class="header d-flex">
+                <h1>Conversor de Moedas</h1>
+            </div>
+    
+            <div class="form d-flex">
+    
+                <label>Selecione as Moedas:</label>
+                
+                <div class="select">
+                    <select name="money1" id="select-money"></select>
+                </div>
+
+                <div id="quant">
+                    <label for="">Quantidade:</label>
+                    <input class="mult" type="number" name="mult" id="mult" value="1">
+                </div>
+
+                <div id="result">
+                    <p id="pResult">R$ 0,00</p>
+                </div>
+    
+            </div>
+
+            <div class="btn-money d-flex">
+                <button type="button" class="btn" onclick="getMoney()">Converter</button>
+            </div>
+
+
+        </div>
+
+    </main>
+
+    <!-- JS Principal -->
+    <script type="text/javascript" src="../js/index.js"></script>
+    <script type="text/javascript" src="../js/coins.js"></script>
+
+</body>
+</html>
