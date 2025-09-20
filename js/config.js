@@ -1,0 +1,1 @@
+window.EXCHANGE_API_KEY = "f01214d8e1ca764bc948162063defe44";

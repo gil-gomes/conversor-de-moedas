@@ -1,94 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+.input-value input[type="number"] {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #e0eafc;
+  background: #f3f6fb;
+  font-size: 16px;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(31, 38, 135, 0.08);
+  transition: border 0.2s, box-shadow 0.2s;
+  margin-top: 16px;
+}
+
+.input-value input[type="number"]:focus {
+  border: 1.5px solid #49a049;
+  outline: none;
+  box-shadow: 0 4px 16px rgba(31, 38, 135, 0.12);
+}
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
 body {
-    font-family: 'Roboto', sans-serif;;
+  font-family: "Roboto", sans-serif;
 }
 
 .d-flex {
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    transform: translateY(50%);
+  display: flex;
+  justify-content: center;
+  transform: translateY(50%);
 }
 
 .panel {
-    width: 600px;
-    height: 400px;
-    box-shadow: 5px 5px 10px 10px #888888;
-    border-radius: 5px;
+  width: 600px;
+  height: 400px;
+  box-shadow: 5px 5px 10px 10px #888888;
+  border-radius: 5px;
 }
 
 .header {
-    transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .form label {
-    font-size: 18px;
+  font-size: 18px;
 }
 
-#quant {
-    margin-top: 20px;
-}
 
-#quant label {
-    font-size: 14px;
-}
-
-.form .mult {
-    border: none;
-    width: 80px;
-}
-
-select::-ms-expand {
-    display: none;
-}
 
 .form select {
-    appearance: none;
-    font-size: 14px;
-    margin-top: 20px;
-    margin-left: 10px;
-    width: 150px;
-    padding: 10px 15px 10px 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e7edea;
-    cursor: pointer;
+  appearance: none;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 150px;
+  padding: 10px 15px 10px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e7edea;
+  cursor: pointer;
 }
 
 .form select:focus {
-    border: transparent;
+  outline: 2px solid #49a049;
+  background-color: #e7edea;
 }
 
-.options{
-    padding-left: 10px;
-    outline: none;
-    font-size: 14px;
-    background-color: #fff;
-    box-shadow: 5px 10px #888888;
+.options {
+  padding-left: 10px;
+  outline: none;
+  font-size: 14px;
+  background-color: #fff;
+  box-shadow: 5px 10px #888888;
 }
 
 #pResult {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 5px 10px 10px #888888;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 5px 10px 10px #888888;
+}
+
+.btn-money {
+  flex-direction: row;
+  gap: 16px;
 }
 
 .btn {
-    color: #fff;
-    background-color: #49A049;
-    border: 0;
-    border-radius: 5px;
-    padding: 8px 0;
-    margin-top: 10px;
-    width: 100px;
-    cursor: pointer;
-    transform: translateY(50%);
+  color: #fff;
+  background-color: #49a049;
+  border: 0;
+  border-radius: 5px;
+  padding: 8px 0;
+  margin-top: 10px;
+  width: 100px;
+  cursor: pointer;
+  transform: translateY(50%);
 }
