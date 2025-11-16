@@ -16,9 +16,12 @@ function convertMoney() {
     const valueEl = document.getElementById("input-value");
     let value = parseFloat(valueEl.value);
 
+    // Limpar mensagem de erro anterior
+    hideError();
+
     if (isNaN(value) || value <= 0) {
       valueEl.classList.add("input-error");
-      showAlertError("Informe um valor maior que zero.");
+      showError("Informe um valor maior que zero.");
       return;
     }
 
@@ -46,9 +49,11 @@ function convertMoney() {
         pResult.textContent = formatter.format(response.result);
         resultBox.classList.add("result--flash");
         setTimeout(() => resultBox.classList.remove("result--flash"), 700);
+        // Limpar erro em caso de sucesso
+        hideError();
       })
       .catch((error) => {
-        showAlertError("Erro ao buscar cotação: " + error.message);
+        showError("Não foi possível realizar a conversão. Tente novamente.");
       })
       .finally(() => {
         setLoading(btnConvert, false);
@@ -58,24 +63,40 @@ function convertMoney() {
       document.getElementById("btn-convert") ||
       document.querySelector('button[onclick="convertMoney()"]');
     setLoading(btnConvert, false);
-    showAlertError("Erro inesperado: " + error.message);
+    showError("Não foi possível realizar a conversão. Tente novamente.");
   }
 }
 
 function validateInputs(moneyA, moneyB) {
   if (moneyA === "---" || moneyB === "---") {
-    const error = new Error("Por favor informe os pares de moedas!");
-    showAlertError(error.message);
+    showError("Por favor informe os pares de moedas!");
     return false;
   }
 
   if (moneyA === moneyB || moneyB === moneyA) {
-    const error = new Error("Por favor informe pares de moedas diferentes!");
-    showAlertError(error.message);
+    showError("Por favor informe pares de moedas diferentes!");
     return false;
   }
 
   return true;
+}
+
+function showError(message) {
+  const errorElement = document.getElementById("error-message");
+  const valueEl = document.getElementById("input-value");
+
+  errorElement.textContent = message;
+  errorElement.classList.add("show");
+  valueEl.classList.add("input-error");
+}
+
+function hideError() {
+  const errorElement = document.getElementById("error-message");
+  const valueEl = document.getElementById("input-value");
+
+  errorElement.textContent = "";
+  errorElement.classList.remove("show");
+  valueEl.classList.remove("input-error");
 }
 
 function showAlertError(message) {
@@ -111,5 +132,6 @@ const inputValueEl = document.getElementById("input-value");
 if (inputValueEl) {
   inputValueEl.addEventListener("input", () => {
     inputValueEl.classList.remove("input-error");
+    hideError();
   });
 }

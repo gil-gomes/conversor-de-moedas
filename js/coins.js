@@ -91,4 +91,18 @@ function invertCoins() {
   var temp = select.selectedIndex;
   select.selectedIndex = select2.selectedIndex;
   select2.selectedIndex = temp;
+  
+  // Verificar se há valor no input e se já foi feita uma conversão
+  const valueEl = document.getElementById("input-value");
+  const pResult = document.getElementById("pResult");
+  const hasValue = valueEl && valueEl.value && parseFloat(valueEl.value) > 0;
+  const hasConversion = pResult && pResult.textContent !== "R$ 0,00" && pResult.textContent !== "";
+  
+  // Se houver valor e conversão anterior, chamar a função de conversão automaticamente
+  if (hasValue && hasConversion) {
+    // Pequeno delay para garantir que a interface atualize antes da conversão
+    setTimeout(function() {
+      convertMoney();
+    }, 100);
+  }
 }
