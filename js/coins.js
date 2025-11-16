@@ -30,11 +30,32 @@ function createOptions() {
     select.add(option1);
   });
 
+  // clonar select para moeda de destino
   select2 = select.cloneNode(true);
   select2.setAttribute("name", "money2");
   select2.setAttribute("id", "select-money-2");
   select2.value = coins[0].cod;
-  divSelect.appendChild(select2);
+
+  // criar wrappers com rótulos para melhorar hierarquia visual
+  var originWrapper = document.createElement("div");
+  originWrapper.className = "field";
+  var originLabel = document.createElement("label");
+  originLabel.textContent = "De";
+  originLabel.setAttribute("for", "select-money");
+  originWrapper.appendChild(originLabel);
+  originWrapper.appendChild(select);
+
+  var destWrapper = document.createElement("div");
+  destWrapper.className = "field";
+  var destLabel = document.createElement("label");
+  destLabel.textContent = "Para";
+  destLabel.setAttribute("for", "select-money-2");
+  destWrapper.appendChild(destLabel);
+  destWrapper.appendChild(select2);
+
+  // inserir na grade
+  divSelect.appendChild(originWrapper);
+  divSelect.appendChild(destWrapper);
 
   select.addEventListener("change", handleSelectChange);
   select2.addEventListener("change", handleSelectChange);

@@ -7,11 +7,22 @@ function convertMoney() {
       return;
     }
 
+    const btnConvert =
+      document.getElementById("btn-convert") ||
+      document.querySelector('button[onclick="convertMoney()"]');
     const pResult = document.getElementById("pResult");
-
+    const resultBox = document.getElementById("result");
     const apiKey = window.EXCHANGE_API_KEY || "";
+    const valueEl = document.getElementById("input-value");
+    let value = parseFloat(valueEl.value);
 
-    let value = document.getElementById("input-value").value || 1;
+    if (isNaN(value) || value <= 0) {
+      valueEl.classList.add("input-error");
+      showAlertError("Informe um valor maior que zero.");
+      return;
+    }
+
+    setLoading(btnConvert, true);
 
     const url = `https://api.exchangerate.host/convert?from=${moneyA}&to=${moneyB}&amount=${value}&access_key=${apiKey}`;
 
@@ -25,12 +36,28 @@ function convertMoney() {
     })
       .then(async (res) => {
         const response = await res.json();
-        pResult.innerHTML = "R$ " + response.result.toString().substring(0, 4);
+        if (!response || typeof response.result !== "number") {
+          throw new Error("Resposta inválida da API.");
+        }
+        const formatter = new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: moneyB,
+        });
+        pResult.textContent = formatter.format(response.result);
+        resultBox.classList.add("result--flash");
+        setTimeout(() => resultBox.classList.remove("result--flash"), 700);
       })
       .catch((error) => {
         showAlertError("Erro ao buscar cotação: " + error.message);
+      })
+      .finally(() => {
+        setLoading(btnConvert, false);
       });
   } catch (error) {
+    const btnConvert =
+      document.getElementById("btn-convert") ||
+      document.querySelector('button[onclick="convertMoney()"]');
+    setLoading(btnConvert, false);
     showAlertError("Erro inesperado: " + error.message);
   }
 }
@@ -57,5 +84,32 @@ function showAlertError(message) {
     text: message,
     icon: "error",
     confirmButtonText: "Ok",
+  });
+}
+
+function setLoading(button, isLoading) {
+  if (!button) return;
+  if (isLoading) {
+    button.classList.add("is-loading");
+    button.setAttribute("aria-busy", "true");
+    button.disabled = true;
+    const original = button.dataset.originalText || button.textContent;
+    button.dataset.originalText = original;
+    button.textContent = "Convertendo...";
+  } else {
+    button.classList.remove("is-loading");
+    button.removeAttribute("aria-busy");
+    button.disabled = false;
+    if (button.dataset.originalText) {
+      button.textContent = button.dataset.originalText;
+    }
+  }
+}
+
+// limpar erro visual ao digitar novamente
+const inputValueEl = document.getElementById("input-value");
+if (inputValueEl) {
+  inputValueEl.addEventListener("input", () => {
+    inputValueEl.classList.remove("input-error");
   });
 }
