@@ -135,3 +135,30 @@ if (inputValueEl) {
     hideError();
   });
 }
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.contains("dark");
+  const next = isDark ? "light" : "dark";
+  localStorage.setItem("theme", next);
+  applyTheme(next);
+}
+
+function applyTheme(theme) {
+  var root = document.documentElement;
+  if (theme === "dark") {
+    root.classList.add("dark");
+  } else {
+    root.classList.remove("dark");
+  }
+  var btn = document.getElementById("btn-theme");
+  if (btn) {
+    var isDark = theme === "dark";
+    btn.setAttribute("aria-checked", String(isDark));
+  }
+}
+
+(function initTheme() {
+  var stored = localStorage.getItem("theme");
+  var theme = stored === "dark" ? "dark" : "light";
+  applyTheme(theme);
+})();

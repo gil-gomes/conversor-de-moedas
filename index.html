@@ -7,35 +7,85 @@
     <meta name="theme-color" content="#2E7D32" />
     <title>Conversor de Moedas</title>
     <link rel="stylesheet" href="./css/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @custom-variant dark (&:where(.dark, .dark *));
+    </style>
   </head>
-  <body>
-    <main>
-      <div class="panel">
-        <header class="header">
-          <h1>Conversor de Moedas</h1>
-          <p class="subheader">Converta valores entre moedas em tempo real.</p>
+  <body class="bg-white text-gray-800 dark:bg-gray-950 dark:text-white">
+    <button
+      type="button"
+      id="btn-theme"
+      onclick="toggleTheme()"
+      role="switch"
+      aria-checked="false"
+      class="fixed top-4 right-4 inline-flex items-center justify-center gap-2 rounded-full px-3 py-2 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 border border-gray-200 dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer"
+      aria-label="Alternar tema"
+    >
+      <svg
+        id="icon-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="h-4 w-4 text-gray-700 dark:hidden"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        />
+      </svg>
+      <svg
+        id="icon-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="h-4 w-4 hidden dark:inline-block text-gray-200"
+      >
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+      </svg>
+      <span class="sr-only">Alternar tema</span>
+    </button>
+    <main class="min-h-screen flex items-center justify-center p-6">
+      <div
+        class="panel w-full max-w-[680px] bg-white border border-gray-200 rounded-xl shadow-lg p-7 md:p-8 dark:bg-gray-900 dark:border-gray-700"
+      >
+        <header class="header mb-4">
+          <h1 class="m-0 mb-1 font-bold text-2xl dark:text-white">
+            Conversor de Moedas
+          </h1>
+          <p class="subheader m-0 text-gray-500 text-sm">
+            Converta valores entre moedas em tempo real.
+          </p>
         </header>
 
         <form
-          class="form"
+          class="form grid gap-5"
           onsubmit="event.preventDefault(); convertMoney();"
           novalidate
         >
-          <label class="group-label" id="money-group-label"
-            >Selecione as moedas</label
-          >
+          <label class="group-label font-medium" id="money-group-label">
+            Selecione as moedas
+          </label>
 
-          <div class="select select-grid" aria-labelledby="money-group-label">
+          <div
+            class="select select-grid grid grid-cols-1 gap-3 sm:grid-cols-2"
+            aria-labelledby="money-group-label"
+          >
             <select
               name="money1"
               id="select-money"
               aria-label="Moeda de origem"
+              class="appearance-none w-full px-3 py-3 border border-gray-200 rounded-lg bg-white text-gray-800 text-base focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-700 disabled:opacity-50 dark:bg-gray-900 dark:text-white dark:border-gray-700"
             ></select>
             <!-- O segundo select será criado via JS (coins.js) -->
           </div>
 
           <div class="input-value">
-            <label for="input-value">Valor</label>
+            <label for="input-value" class="block font-medium mb-1"
+              >Valor</label
+            >
             <input
               type="number"
               id="input-value"
@@ -45,22 +95,39 @@
               placeholder="Digite o valor"
               inputmode="decimal"
               aria-describedby="value-help"
+              class="appearance-none w-full px-3 py-3 border border-gray-200 rounded-lg bg-white text-gray-800 text-base focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-700 dark:bg-gray-900 dark:text-white dark:border-gray-700"
             />
-            <small id="value-help" class="help"
-              >Use ponto para decimais, ex.: 10.50</small
+            <small
+              id="value-help"
+              class="help text-gray-500 text-xs mt-1 block"
             >
-            <small id="error-message" class="error-message"></small>
+              Use ponto para decimais, ex.: 10.50
+            </small>
+            <small
+              id="error-message"
+              class="error-message text-red-500 text-xs mt-1 font-medium"
+            ></small>
           </div>
 
-          <div id="result" class="result" role="status" aria-live="polite">
-            <p id="pResult" class="result-value">R$ 0,00</p>
+          <div
+            id="result"
+            class="result border border-dashed border-gray-200 rounded-lg p-3 bg-white dark:border-gray-700 dark:bg-gray-900"
+            role="status"
+            aria-live="polite"
+          >
+            <p
+              id="pResult"
+              class="result-value m-0 text-lg font-medium dark:text-white"
+            >
+              R$ 0,00
+            </p>
           </div>
 
-          <div class="btn-money">
+          <div class="btn-money grid grid-cols-2 gap-3">
             <button
               type="submit"
               id="btn-convert"
-              class="btn"
+              class="btn inline-flex items-center justify-center gap-2 text-white bg-green-700 hover:bg-green-600 border-0 rounded-lg px-4 py-3 font-medium cursor-pointer transition-[background-color,transform] duration-150 ease-linear active:translate-y-px disabled:opacity-60"
               onclick="convertMoney()"
             >
               Converter
@@ -68,7 +135,7 @@
             <button
               type="button"
               id="btn-invert"
-              class="btn btn-secondary"
+              class="btn btn-secondary inline-flex items-center justify-center gap-2 text-white bg-blue-500 hover:bg-blue-600 border-0 rounded-lg px-4 py-3 font-medium cursor-pointer transition-[background-color,transform] duration-150 ease-linear active:translate-y-px disabled:opacity-60"
               onclick="invertCoins()"
             >
               Inverter
@@ -76,8 +143,12 @@
           </div>
         </form>
 
-        <footer class="footer">
-          <p class="footer-text">Taxas fornecidas por exchangerate.host</p>
+        <footer
+          class="footer mt-6 pt-4 border-t border-gray-200 text-center dark:border-gray-700"
+        >
+          <p class="footer-text m-0 text-gray-500 text-xs dark:text-white">
+            Taxas fornecidas por exchangerate.host
+          </p>
         </footer>
       </div>
     </main>

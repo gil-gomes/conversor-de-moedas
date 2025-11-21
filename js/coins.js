@@ -38,17 +38,19 @@ function createOptions() {
 
   // criar wrappers com rótulos para melhorar hierarquia visual
   var originWrapper = document.createElement("div");
-  originWrapper.className = "field";
+  originWrapper.className = "field flex flex-col gap-2";
   var originLabel = document.createElement("label");
   originLabel.textContent = "De";
+  originLabel.className = "block font-medium";
   originLabel.setAttribute("for", "select-money");
   originWrapper.appendChild(originLabel);
   originWrapper.appendChild(select);
 
   var destWrapper = document.createElement("div");
-  destWrapper.className = "field";
+  destWrapper.className = "field flex flex-col gap-2";
   var destLabel = document.createElement("label");
   destLabel.textContent = "Para";
+  destLabel.className = "block font-medium";
   destLabel.setAttribute("for", "select-money-2");
   destWrapper.appendChild(destLabel);
   destWrapper.appendChild(select2);
@@ -91,17 +93,18 @@ function invertCoins() {
   var temp = select.selectedIndex;
   select.selectedIndex = select2.selectedIndex;
   select2.selectedIndex = temp;
-  
+
   // Verificar se há valor no input e se já foi feita uma conversão
   const valueEl = document.getElementById("input-value");
   const pResult = document.getElementById("pResult");
   const hasValue = valueEl && valueEl.value && parseFloat(valueEl.value) > 0;
-  const hasConversion = pResult && pResult.textContent !== "R$ 0,00" && pResult.textContent !== "";
-  
+  const hasConversion =
+    pResult && pResult.textContent !== "R$ 0,00" && pResult.textContent !== "";
+
   // Se houver valor e conversão anterior, chamar a função de conversão automaticamente
   if (hasValue && hasConversion) {
     // Pequeno delay para garantir que a interface atualize antes da conversão
-    setTimeout(function() {
+    setTimeout(function () {
       convertMoney();
     }, 100);
   }
